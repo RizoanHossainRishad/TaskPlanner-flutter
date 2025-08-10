@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taskplanner_demos/model_classes/listmodel.dart';
 import 'package:taskplanner_demos/screens/add_list.dart';
-import 'package:taskplanner_demos/screens/demoscreening.dart';
+import 'package:taskplanner_demos/screens/task_screen.dart';
 
 import '../helper_funcs/list_helper.dart';
 
@@ -21,7 +21,7 @@ class _ListScreenState extends State<ListScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Flutter SqLite"),
+            Text("All Lists"),
             IconButton(onPressed: () async {
               final refresh2=await Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AddList(
 
@@ -102,7 +102,8 @@ class _ListScreenState extends State<ListScreen> {
                       ],
                     ),
                     onTap: () async{
-                      final refresh=await Navigator.of(context).push(MaterialPageRoute(builder: (_)=>Demoscreening(
+                      final refresh=await Navigator.of(context).push(MaterialPageRoute(builder: (_)=>task_screen(
+                        catID: contacts.id!,
                       )));
                       if(refresh){
                         setState(() {

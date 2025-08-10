@@ -14,7 +14,7 @@ class DBhelper{
     CREATE TABLE Lists (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       namedid TEXT,
-      colorValue INTEGER,
+      colorValue INTEGER
     )
   ''';
 

@@ -32,7 +32,7 @@ class DBTaskHelper{
       Database db=await initDB();
       return db.update('Tasks',task.toJson(),where: 'id=?',whereArgs: [task.id]);
   }
-  static Future<List<Task>> readTask(String ListID) async{
+  static Future<List<Task>> readTask(int ListID) async{
     Database db= await initDB();
     var tasker= await db.query('Tasks',where: 'listId=?',whereArgs: [ListID],orderBy: 'id');
     List<Task> listofTasks=tasker.isNotEmpty?

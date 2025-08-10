@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Task {
   int id;
   String name;           // Unique ID for each task
@@ -5,7 +7,7 @@ class Task {
   String description;  // Task details
   String category;     // Fixed options from dropdown
   DateTime date;       // Task date
-  String time;         // Task time in HH:mm format
+  TimeOfDay time;         // Task time in HH:mm format
   bool isDone;         // Checkbox status
 
   Task({
@@ -18,7 +20,9 @@ class Task {
     required this.time,
     this.isDone = false,
   });
-
+  void toggleDone(){
+    isDone=!isDone;
+  }
   // Convert Task to JSON
   //Jokhon jabe tokhon map akare jabe
   Map<String, dynamic> toJson() {
@@ -29,7 +33,7 @@ class Task {
       'description': description,
       'category': category,
       'date': date.toIso8601String(),
-      'time': time,
+      'time': '${time.hour}:${time.minute}',
       'isDone': isDone,
     };
   }
@@ -37,15 +41,23 @@ class Task {
   // Create Task from JSON
   //jokhon ashbe tokhon Class er object akare ashbe
   factory Task.fromJson(Map<String, dynamic> json) {
+    // Handle possible null or invalid time
+    final timeString = json['time']?.toString() ?? '00:00';
+    final timeParts = timeString.split(':');
+    final hour = int.tryParse(timeParts.isNotEmpty ? timeParts[0] : '0') ?? 0;
+    final minute = int.tryParse(timeParts.length > 1 ? timeParts[1] : '0') ?? 0;
+
     return Task(
-      id:json['id'],
+      id: json['id'],
       name: json['name'],
       listId: json['listId'],
       description: json['description'],
       category: json['category'],
-      date: DateTime.parse(json['date']),
-      time: json['time'],
-      isDone: json['isDone'] ?? false,
+      date: DateTime.tryParse(json['date'] ?? '') ?? DateTime.now(),
+      time: TimeOfDay(hour: hour, minute: minute),
+      isDone: json['isDone'] == 1,
     );
   }
+
+
 }
