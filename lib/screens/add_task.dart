@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskplanner_demos/helper_funcs/task_helper.dart';
 import '../model_classes/taskmodel.dart';
 
 class AddTask extends StatefulWidget {
@@ -67,13 +68,42 @@ class _AddTaskState extends State<AddTask> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Tasks'),
-        leading: IconButton(
-          onPressed: () => Navigator.of(context).pop(false),
-          icon: Icon(Icons.arrow_back),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Add Tasks on Category ${widget.catID}'),
+            if (widget.task != null && widget.task!.name.isNotEmpty)
+              IconButton(
+                onPressed: () async {
+                  await DBTaskHelper.deleteTask(widget.task!.id);
+                  setState(() {});
+                  Navigator.of(context).pop(true);
+                },
+                icon: Icon(Icons.delete),
+              )
+            else
+              IconButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text("Task is yet to be added!!"),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: Text("OK"),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                icon: Icon(Icons.info_outline),
+              ),
+          ],
         ),
       ),
-      body: Padding(
+
+        body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
           child: Column(
@@ -102,6 +132,7 @@ class _AddTaskState extends State<AddTask> {
                       hint: Text("Select a Category!!",
                         style: TextStyle(
                         fontSize: 15,
+                          color: Colors.grey
                       ),
                       ),
                       underline: SizedBox(),
@@ -145,11 +176,17 @@ class _AddTaskState extends State<AddTask> {
                             _selectedDate == null
                                 ? "Select a Date to track!"
                                 : "${_selectedDate!.year}-${_selectedDate!.month}-${_selectedDate!.day}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                            style: _selectedDate == null
+                                ? TextStyle(
+                              fontSize: 15,
+                              color: Colors.grey // style for null date
+                            )
+                                : TextStyle(
+                              fontWeight: FontWeight.w600,
                               fontSize: 20,
+                              color: Colors.black, // style for selected date
                             ),
-                          ),
+                          )
                         ),
                         ElevatedButton(
                           onPressed: () =>
@@ -183,12 +220,17 @@ class _AddTaskState extends State<AddTask> {
                         Expanded(
                           child: Text(
                             _selectedTime == null
-                                ? "Select a Time for the task to be done!"
+                                ? "Set Completion time"
                                 : _selectedTime!.format(context),
-                            style: TextStyle(
+                            style:_selectedTime!=null?
+                            TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
-                            ),
+                              color: Colors.black,
+                            ):TextStyle(
+                              fontSize: 15,
+                              color: Colors.grey
+                            )
                           ),
                         ),
                         ElevatedButton(
@@ -206,6 +248,44 @@ class _AddTaskState extends State<AddTask> {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 30,
+              ),
+                ElevatedButton(
+                    onPressed: ()async{
+                      if(widget.task!=null){
+                        await DBTaskHelper.updateTask(Task(
+                          id: widget.task!.id,
+                          listId: widget.catID!,
+                          description:_descController.text,
+                          name: widget.task!.name,
+                          category: _selectedCategory!,
+                          date: _selectedDate!,
+                          time: _selectedTime!,
+                          isDone: widget.task!.isDone,
+                        ));
+                        setState(() {
+
+                        });
+                        Navigator.of(context).pop(true);
+                      }else{
+                        await DBTaskHelper.createTasks(Task(
+                          listId: widget.catID!,
+                          description:_descController.text,
+                          name: _nameController.text,
+                          category: _selectedCategory!,
+                          date: _selectedDate!,
+                          time: _selectedTime!,
+                        ));
+                        setState(() {
+
+                        });
+                        Navigator.of(context).pop(true);
+                      }
+
+                    },
+                    child: Text("Add Task")
+                ),
             ],
           ),
         ),
@@ -220,7 +300,16 @@ class _AddTaskState extends State<AddTask> {
 Widget _buildTextEdit(TextEditingController t, String s) {
   return TextField(
     controller: t,
+    style: TextStyle(
+      color: Colors.black,
+      fontWeight: FontWeight.bold,
+      fontSize: 20,
+    ),
     decoration: InputDecoration(
+      hintStyle: TextStyle(
+        color: Colors.grey,
+        fontSize: 15,
+      ),
       hintText: s,
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
     ),

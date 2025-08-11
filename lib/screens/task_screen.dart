@@ -67,10 +67,15 @@ class _task_screenState extends State<task_screen> {
                         ),
                         title: Text(tasks.name),
                         subtitle: Text("${tasks.id}"),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [],
+                        trailing: Checkbox(
+                          value: tasks.isDone,
+                            onChanged: (value) {
+                              DBTaskHelper.toggleTask(tasks).then((_) {
+                                setState(() {});
+                              });
+                            }
+
+
                         ),
                         onTap: () async {
                           final refresh = await Navigator.of(context).push(
