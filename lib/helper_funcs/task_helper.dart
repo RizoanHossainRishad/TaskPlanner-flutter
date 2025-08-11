@@ -39,8 +39,14 @@ class DBTaskHelper{
     List.generate(tasker.length, (i)=>Task.fromJson(tasker[i])):[];
     return listofTasks;
   }
-  static Future<int> deleteTask(int id) async{
+  static Future<int> deleteTask(int? id) async{
     Database db=await initDB();
     return await db.delete('Tasks',where: 'id=?',whereArgs: [id]);
+  }
+  static Future<int> toggleTask(Task task) async{
+    Database db=await initDB();
+    task.toggleDone();
+    return db.update('Tasks',task.toJson(),where: 'id=?',whereArgs: [task.id]);
+
   }
 }

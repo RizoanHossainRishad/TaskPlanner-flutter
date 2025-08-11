@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Task {
-  int id;
+  int? id;
   String name;           // Unique ID for each task
-  String listId;       // ID of the list this task belongs to
+  int listId;       // ID of the list this task belongs to
   String description;  // Task details
   String category;     // Fixed options from dropdown
   DateTime date;       // Task date
@@ -11,7 +11,7 @@ class Task {
   bool isDone;         // Checkbox status
 
   Task({
-    required this.id,
+    this.id,
     required this.name,
     required this.listId,
     required this.description,
@@ -27,7 +27,7 @@ class Task {
   //Jokhon jabe tokhon map akare jabe
   Map<String, dynamic> toJson() {
     return {
-      'id':id,
+
       'name': name,
       'listId': listId,
       'description': description,
