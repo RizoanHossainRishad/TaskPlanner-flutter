@@ -25,6 +25,7 @@ class ListModel {
 
   factory ListModel.fromMap(Map<String, dynamic> map) {
     return ListModel(
+      
       id: map['id'],
       namedid: map['namedid'],
       color: Color(map['colorValue']),

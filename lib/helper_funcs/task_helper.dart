@@ -49,4 +49,14 @@ class DBTaskHelper{
     return db.update('Tasks',task.toJson(),where: 'id=?',whereArgs: [task.id]);
 
   }
+  static Future<int> countTask(int ListID) async{
+    Database db= await initDB();
+    var query=await db.rawQuery(
+      "SELECT COUNT(*) FROM tasks WHERE listId=?",
+      [ListID]
+    );
+    int counts=query.first.values.first as int;
+    return counts;
+  }
+
 }

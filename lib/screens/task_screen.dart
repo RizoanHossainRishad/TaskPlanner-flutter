@@ -17,9 +17,16 @@ class _task_screenState extends State<task_screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            IconButton(onPressed: (){
+              Navigator.of(context).pop(true);
+              setState(() {
+                
+              });
+            }, icon: Icon(Icons.arrow_back)),
             Text("Tasks"),
             IconButton(
               onPressed: () async {
