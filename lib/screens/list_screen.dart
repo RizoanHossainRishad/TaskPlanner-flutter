@@ -18,238 +18,270 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
+    Color? color;
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    return SafeArea(
-      child: Scaffold(
-        body: FutureBuilder<List<ListModel>>(
-          future: DBhelper.readList(),
-          builder: (BuildContext context, AsyncSnapshot<List<ListModel>> snapshot) {
-            if (!snapshot.hasData) {
-              return CustomScrollView(
-                slivers: [
-                  _buildSliverAppBar(screenWidth),
-                  SliverFillRemaining(
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircularProgressIndicator(),
-                          SizedBox(height: 20),
-                          Text("Loading..."),
-                        ],
-                      ),
+    return Scaffold(
+      body: FutureBuilder<List<ListModel>>(
+        future: DBhelper.readList(),
+        builder: (BuildContext context, AsyncSnapshot<List<ListModel>> snapshot) {
+          if (!snapshot.hasData) {
+            return CustomScrollView(
+              slivers: [
+                _buildSliverAppBar(screenWidth),
+                SliverFillRemaining(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(),
+                        SizedBox(height: 20),
+                        Text("Loading..."),
+                      ],
                     ),
                   ),
-                ],
-              );
-            }
-            return snapshot.data!.isEmpty
-                ? CustomScrollView(
-                    slivers: [
-                      _buildSliverAppBar(screenWidth),
-                      SliverFillRemaining(
-                        child: Center(child: Text("No Categories in List yet")),
+                ),
+              ],
+            );
+          }
+          return snapshot.data!.isEmpty
+              ? CustomScrollView(
+                  slivers: [
+                    _buildSliverAppBar(screenWidth),
+                    SliverToBoxAdapter(
+                      child: Container(
+                        height: screenHeight * 0.08,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.orange.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(
+                            screenWidth * 0.01,
+                          ),
+                          border: BoxBorder.all(
+                            color: Colors.green,
+                            width: screenWidth * 0.005,
+                          ),
+                        ),
+                        margin: EdgeInsets.only(
+                          top: screenHeight * 0.01,
+                          left: screenWidth * 0.03,
+                          right: screenWidth * 0.03,
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(height: screenHeight * 0.01),
+                            Icon(Icons.hourglass_empty),
+                            SizedBox(height: screenHeight * 0.01),
+                            Text(
+                              "No List is created yet!!",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  )
-                : CustomScrollView(
-                    slivers: [
-                      _buildSliverAppBar(screenWidth),
+                    ),
+                    addNewList(),
+                  ],
+                )
+              : CustomScrollView(
+                  slivers: [
+                    _buildSliverAppBar(screenWidth),
 
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate((context, index) {
-                          final contacts = snapshot.data![index];
-                          return Center(
-                            child: Container(
-                              margin: EdgeInsets.symmetric(
-                                vertical: screenHeight * 0.009,
-                                horizontal: screenWidth * 0.02,
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        final contacts = snapshot.data![index];
+                        return Center(
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                              vertical: screenHeight * 0.009,
+                              horizontal: screenWidth * 0.02,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                screenWidth * 0.02,
                               ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  screenWidth * 0.02,
-                                ),
-                                // ✅ FIXED: Correct border syntax
-                                border: Border.all(
-                                  width: screenWidth * 0.006,
-                                  color: Color(
+                              // ✅ FIXED: Correct border syntax
+                              border: Border.all(
+                                width: screenWidth * 0.006,
+                                color: /*Color(
+                                  contacts.colorValue,
+                                ).withOpacity(0.5)*/Colors.blueGrey.withOpacity(0.5),
+                              ),
+                              // Optional: Add subtle shadow
+                              boxShadow: [
+                                BoxShadow(
+                                  color:/* Color(
                                     contacts.colorValue,
-                                  ).withOpacity(0.3),
+                                  ).withOpacity(0.2),*/Colors.grey.withOpacity(0.7),
+                                  blurRadius: 5,
+                                  offset: Offset(0, 2),
                                 ),
-                                // Optional: Add subtle shadow
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(
-                                      contacts.colorValue,
-                                    ).withOpacity(0.2),
-                                    blurRadius: 5,
-                                    offset: Offset(0, 2),
+                              ],
+                              color: Colors.white,
+                            ),
+                            child: ListTile(
+                              leading: Container(
+                                height: screenHeight * 0.05,
+                                width: screenWidth * 0.1,
+                                decoration: BoxDecoration(
+                                  border: BoxBorder.all(
+                                    color: Colors.blueGrey.withOpacity(0.5)
                                   ),
-                                ],
-                                color: Colors.white,
+                                  color: Color(contacts.colorValue),
+                                  borderRadius: BorderRadius.circular(
+                                    screenWidth * 0.03,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    contacts.id.toString(),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      // ✅ IMPROVED: Better contrast
+                                      color: Colors.white,
+                                      fontSize: screenWidth * 0.04,
+                                    ),
+                                  ),
+                                ),
                               ),
-                              child: ListTile(
-                                leading: Container(
-                                  height: screenHeight * 0.05,
-                                  width: screenWidth * 0.1,
-                                  decoration: BoxDecoration(
-                                    color: Color(contacts.colorValue),
-                                    borderRadius: BorderRadius.circular(
-                                      screenWidth * 0.03,
-                                    ),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      contacts.id.toString(),
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        // ✅ IMPROVED: Better contrast
-                                        color: Colors.white,
-                                        fontSize: screenWidth * 0.04,
-                                      ),
-                                    ),
-                                  ),
-                                ),
 
-                                title: Text(
-                                  contacts.namedid,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: screenWidth * 0.045,
-                                  ),
+                              title: Text(
+                                contacts.namedid,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: screenWidth * 0.045,
                                 ),
-                                subtitle: FutureBuilder<int>(
-                                  future: DBTaskHelper.countTask(contacts.id!),
-                                  builder: (context, snapshots) {
-                                    if (!snapshots.hasData) {
-                                      return Row(
-                                        children: [
-                                          Text(
-                                            "Loading..",
-                                            style: TextStyle(
-                                              fontSize: screenWidth * 0.035,
-                                              color: Colors.grey.shade600,
-                                            ),
+                              ),
+                              subtitle: FutureBuilder<int>(
+                                future: DBTaskHelper.countTask(contacts.id!),
+                                builder: (context, snapshots) {
+                                  if (!snapshots.hasData) {
+                                    return Row(
+                                      children: [
+                                        Text(
+                                          "Loading..",
+                                          style: TextStyle(
+                                            fontSize: screenWidth * 0.035,
+                                            color: Colors.grey.shade600,
                                           ),
-                                          CircularProgressIndicator(),
-                                        ],
-                                      );
-                                    }
-                                    return snapshots.data! == 0
-                                        ? Text("No Tasks")
-                                        : Text(
-                                            "${snapshots.data} Tasks",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: screenWidth * 0.035,
-                                              color: Colors.grey.shade600,
-                                            ),
-                                          );
-                                  },
-                                ),
-                                trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.edit,
-                                        color: Colors.blue,
-                                        size: screenWidth * 0.06,
-                                      ),
-                                      onPressed: () async {
-                                        final refresh =
-                                            await Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (_) => AddList(
-                                                  listes: ListModel(
-                                                    id: contacts.id,
-                                                    namedid: contacts.namedid,
-                                                    color: Color(
-                                                      contacts.colorValue,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                        if (refresh) {
-                                          setState(() {});
-                                        }
-                                      },
-                                    ),
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
-                                        size: screenWidth * 0.06,
-                                      ),
-                                      onPressed: () async {
-                                        // ✅ IMPROVED: Add confirmation dialog
-                                        bool? confirm = await showDialog<bool>(
-                                          context: context,
-                                          builder: (context) => AlertDialog(
-                                            title: Text("Delete List"),
-                                            content: Text(
-                                              "Are you sure you want to delete '${contacts.namedid}'?",
-                                            ),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                  context,
-                                                  false,
-                                                ),
-                                                child: Text("Cancel"),
-                                              ),
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                  context,
-                                                  true,
-                                                ),
-                                                child: Text(
-                                                  "Delete",
-                                                  style: TextStyle(
-                                                    color: Colors.red,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                        ),
+                                        CircularProgressIndicator(),
+                                      ],
+                                    );
+                                  }
+                                  return snapshots.data! == 0
+                                      ? Text("No Tasks")
+                                      : Text(
+                                          "${snapshots.data} Tasks",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: screenWidth * 0.035,
+                                            color: Colors.grey.shade600,
                                           ),
                                         );
-
-                                        if (confirm == true) {
-                                          await DBhelper.deleteList(
-                                            contacts.id!,
-                                          );
-                                          setState(() {});
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                onTap: () async {
-                                  final refresh = await Navigator.of(context)
-                                      .push(
-                                        MaterialPageRoute(
-                                          builder: (_) =>
-                                              task_screen(catID: contacts.id!),
-                                        ),
-                                      );
-                                  if (refresh) {
-                                    setState(() {});
-                                  }
                                 },
                               ),
-                            ),
-                          );
-                        }, childCount: snapshot.data!.length),
-                      ),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.edit,
+                                      color: Colors.blue,
+                                      size: screenWidth * 0.06,
+                                    ),
+                                    onPressed: () async {
+                                      final refresh =
+                                          await Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (_) => AddList(
+                                                listes: ListModel(
+                                                  id: contacts.id,
+                                                  namedid: contacts.namedid,
+                                                  color: Color(
+                                                    contacts.colorValue,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                      if (refresh) {
+                                        setState(() {});
+                                      }
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
+                                      size: screenWidth * 0.06,
+                                    ),
+                                    onPressed: () async {
+                                      // ✅ IMPROVED: Add confirmation dialog
+                                      bool? confirm = await showDialog<bool>(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          title: Text("Delete List"),
+                                          content: Text(
+                                            "Are you sure you want to delete '${contacts.namedid}'?",
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                context,
+                                                false,
+                                              ),
+                                              child: Text("Cancel"),
+                                            ),
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                context,
+                                                true,
+                                              ),
+                                              child: Text(
+                                                "Delete",
+                                                style: TextStyle(
+                                                  color: Colors.red,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
 
-                      addNewList(),
-                    ],
-                  );
-          },
-        ),
+                                      if (confirm == true) {
+                                        await DBhelper.deleteList(
+                                          contacts.id!,
+                                        );
+                                        setState(() {});
+                                      }
+                                    },
+                                  ),
+                                ],
+                              ),
+                              onTap: () async {
+                                final refresh = await Navigator.of(context)
+                                    .push(
+                                      MaterialPageRoute(
+                                        builder: (_) =>
+                                            task_screen(catID: contacts.id!,color: contacts.colorValue,),
+                                      ),
+                                    );
+                                if (refresh == true) {
+                                  setState(() {});
+                                }
+                              },
+                            ),
+                          ),
+                        );
+                      }, childCount: snapshot.data!.length),
+                    ),
+
+                    addNewList(),
+                  ],
+                );
+        },
       ),
     );
   }
@@ -259,6 +291,7 @@ class _ListScreenState extends State<ListScreen> {
       flexibleSpace: FlexibleSpaceBar(
         background: Container(
           decoration: BoxDecoration(
+
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -278,7 +311,6 @@ class _ListScreenState extends State<ListScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // Hamburger menu icon
-
             Text(
               "All Lists",
               style: TextStyle(
