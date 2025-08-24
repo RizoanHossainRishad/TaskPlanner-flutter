@@ -197,6 +197,9 @@ class _task_screenState extends State<task_screen> {
       flexibleSpace: FlexibleSpaceBar(
         background: Container(
           decoration: BoxDecoration(
+            border: BoxBorder.all(
+              color: Colors.blueGrey
+            ),
             borderRadius: BorderRadius.only(
               bottomRight: Radius.circular(
                 MediaQuery.of(context).size.height * 0.2,
@@ -214,10 +217,6 @@ class _task_screenState extends State<task_screen> {
               ],
             ),
           ),
-         /* child: CustomPaint(
-            painter: CurvedHeaderPainter(widget.color!),
-            child: Container(),
-          ),*/
           child:  Padding(
             padding: EdgeInsets.all( MediaQuery.of(context).size.width*0.1 ),
             child: Row(
@@ -227,11 +226,37 @@ class _task_screenState extends State<task_screen> {
                 Container(
                   padding: EdgeInsets.all(2),
                   child: IconButton(
+                    style: ButtonStyle(
+                    ),
                     onPressed: () {
                       Navigator.of(context).pop(true);
                       setState(() {});
                     },
-                    icon: Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                    icon: Icon(Icons.arrow_back, color: Colors.white, size: 28,
+                      shadows: [
+                        Shadow(
+                          // bottomLeft
+                          offset: Offset(-1.5, -1.5),
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                        Shadow(
+                          // bottomRight
+                          offset: Offset(1.5, -1.5),
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                        Shadow(
+                          // topRight
+                          offset: Offset(1.5, 1.5),
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                        Shadow(
+                          // topLeft
+                          offset: Offset(-1.5, 1.5),
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                      ],
+
+                    ),
                   ),
                 ),
                 FittedBox(
@@ -242,11 +267,15 @@ class _task_screenState extends State<task_screen> {
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: MediaQuery.of(context).size.width * 0.1,
+                      shadows: shadowStyleBold(),
                     ),
                   ),
                 ),
                 // Add button
                 Container(
+                  decoration: BoxDecoration(
+
+                  ),
                   padding: EdgeInsets.all(8),
                   child: IconButton(
                     onPressed: () async {
@@ -259,7 +288,29 @@ class _task_screenState extends State<task_screen> {
                         setState(() {});
                       }
                     },
-                    icon: Icon(Icons.add, color: Colors.white, size: 28),
+                    icon: Icon(Icons.add, color: Colors.white, size: 28,shadows: [
+                      Shadow(
+                        // bottomLeft
+                        offset: Offset(-1.5, -1.5),
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                      Shadow(
+                        // bottomRight
+                        offset: Offset(1.5, -1.5),
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                      Shadow(
+                        // topRight
+                        offset: Offset(1.5, 1.5),
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                      Shadow(
+                        // topLeft
+                        offset: Offset(-1.5, 1.5),
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                    ],
+                    ),
                   ),
                 ),
               ],
@@ -314,4 +365,29 @@ class CurvedHeaderPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+List<Shadow> shadowStyleBold() {
+  return [
+    Shadow(
+      // bottomLeft
+      offset: Offset(-1.5, -1.5),
+      color: Colors.black.withOpacity(0.5),
+    ),
+    Shadow(
+      // bottomRight
+      offset: Offset(1.5, -1.5),
+      color: Colors.black.withOpacity(0.5),
+    ),
+    Shadow(
+      // topRight
+      offset: Offset(1.5, 1.5),
+      color: Colors.black.withOpacity(0.5),
+    ),
+    Shadow(
+      // topLeft
+      offset: Offset(-1.5, 1.5),
+      color: Colors.black.withOpacity(0.5),
+    ),
+  ];
 }
