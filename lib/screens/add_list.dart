@@ -173,7 +173,12 @@ class _AddListState extends State<AddList> {
                     ),
                     SizedBox(height: 30),
                     ElevatedButton(
-                      child: Text("Add category"),
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(Colors.blueGrey),
+                      ),
+                      child: Text("Add category",style: TextStyle(
+                        color: Colors.white
+                      ),),
                       onPressed: () async {
                         if (widget.listes != null) {
                           await DBhelper.updateList(
