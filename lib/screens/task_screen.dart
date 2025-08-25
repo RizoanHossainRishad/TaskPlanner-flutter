@@ -233,28 +233,7 @@ class _task_screenState extends State<task_screen> {
                       setState(() {});
                     },
                     icon: Icon(Icons.arrow_back, color: Colors.white, size: 28,
-                      shadows: [
-                        Shadow(
-                          // bottomLeft
-                          offset: Offset(-1.5, -1.5),
-                          color: Colors.black.withOpacity(0.5),
-                        ),
-                        Shadow(
-                          // bottomRight
-                          offset: Offset(1.5, -1.5),
-                          color: Colors.black.withOpacity(0.5),
-                        ),
-                        Shadow(
-                          // topRight
-                          offset: Offset(1.5, 1.5),
-                          color: Colors.black.withOpacity(0.5),
-                        ),
-                        Shadow(
-                          // topLeft
-                          offset: Offset(-1.5, 1.5),
-                          color: Colors.black.withOpacity(0.5),
-                        ),
-                      ],
+                      shadows: shadowStyleBold(),
 
                     ),
                   ),
@@ -288,28 +267,7 @@ class _task_screenState extends State<task_screen> {
                         setState(() {});
                       }
                     },
-                    icon: Icon(Icons.add, color: Colors.white, size: 28,shadows: [
-                      Shadow(
-                        // bottomLeft
-                        offset: Offset(-1.5, -1.5),
-                        color: Colors.black.withOpacity(0.5),
-                      ),
-                      Shadow(
-                        // bottomRight
-                        offset: Offset(1.5, -1.5),
-                        color: Colors.black.withOpacity(0.5),
-                      ),
-                      Shadow(
-                        // topRight
-                        offset: Offset(1.5, 1.5),
-                        color: Colors.black.withOpacity(0.5),
-                      ),
-                      Shadow(
-                        // topLeft
-                        offset: Offset(-1.5, 1.5),
-                        color: Colors.black.withOpacity(0.5),
-                      ),
-                    ],
+                    icon: Icon(Icons.add, color: Colors.white, size: 28,shadows: shadowStyleBold(),
                     ),
                   ),
                 ),
@@ -333,7 +291,7 @@ class _task_screenState extends State<task_screen> {
     );
   }
 
-  // Custom painter for the curved bottom
+
 }
 
 class CurvedHeaderPainter extends CustomPainter {
