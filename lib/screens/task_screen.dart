@@ -48,7 +48,7 @@ class _task_screenState extends State<task_screen> {
               ? CustomScrollView(
                   slivers: [
                     _buildSliverAppBar(screenWidth),
-                    AddNewTaskButton(catID: widget.catID,catName:widget.catName),
+                    AddNewTaskButton(catID: widget.catID,catName:widget.catName,color: widget.color,),
                     SliverToBoxAdapter(
                       child: Container(
                         height: screenHeight * 0.09,
@@ -86,7 +86,7 @@ class _task_screenState extends State<task_screen> {
               : CustomScrollView(
                   slivers: [
                     _buildSliverAppBar(screenHeight),
-                    AddNewTaskButton(catID: widget.catID,catName:widget.catName),
+                    AddNewTaskButton(catID: widget.catID,catName:widget.catName,color: widget.color,),
                     SliverList(
                       delegate: SliverChildBuilderDelegate((context, index) {
                         final task = snapshot.data?[index];
@@ -279,13 +279,15 @@ class _task_screenState extends State<task_screen> {
                   padding: EdgeInsets.all(8),
                   child: IconButton(
                     onPressed: () async {
-                      final refresh = await Navigator.of(context).push(
+                      final refresh = await Navigator.push(context,
                         MaterialPageRoute(
                           builder: (context) => AddTask(catName: widget.catName,catID: widget.catID,),
                         ),
                       );
                       if (refresh == true) {
-                        setState(() {});
+                        setState(() {
+
+                        });
                       }
                     },
                     icon: Icon(Icons.add, color: Colors.white, size: 28,shadows: shadowStyleBold(),

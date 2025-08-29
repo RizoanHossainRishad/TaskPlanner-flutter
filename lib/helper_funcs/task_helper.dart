@@ -30,7 +30,7 @@ class DBTaskHelper{
 
   static Future<int> updateTask(Task task) async{
       Database db=await initDB();
-      return db.update('Tasks',task.toJson(),where: 'id=?',whereArgs: [task.id]);
+      return await db.update('Tasks',task.toJson(),where: 'id=?',whereArgs: [task.id]);
   }
   static Future<List<Task>> readTask(int ListID) async{
     Database db= await initDB();

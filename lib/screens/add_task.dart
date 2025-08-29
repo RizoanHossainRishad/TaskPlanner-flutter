@@ -247,10 +247,12 @@ class _AddTaskState extends State<AddTask> {
                             ),
 
                           );
-                          setState(() {});
+
                           Navigator.of(context).pop(true);
+                          setState(() {});
+
                         } else {
-                          await DBTaskHelper.createTasks(
+                          final refresh =await DBTaskHelper.createTasks(
                             Task(
                               listId: widget.catID!,
                               description: _descController.text,
@@ -260,12 +262,15 @@ class _AddTaskState extends State<AddTask> {
                               time: _selectedTime!,
                             ),
                           );
-                          setState(() {});
+
+                        if(refresh>0){
                           Navigator.of(context).pop(true);
+
+                        }
                         }
                       },
                       child: Text(
-                        "Add Task",
+                        (widget.task == null) ?"Add Task":"Update Task",
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

@@ -1,14 +1,30 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:taskplanner_demos/screens/task_screen.dart';
 
 import 'add_task.dart';
 
-class AddNewTaskButton extends StatelessWidget {
+/*class AddNewTaskButton extends StatelessWidget {
   int? catID;
   String? catName;
   AddNewTaskButton({super.key,required this.catID,required this.catName});
 
+  @override
+
+}*/
+
+class AddNewTaskButton extends StatefulWidget {
+  int? catID;
+  String? catName;
+  int? color;
+  AddNewTaskButton({super.key,required this.catID,required this.catName,required this.color});
+
+  @override
+  State<AddNewTaskButton> createState() => _AddNewTaskButtonState();
+}
+
+class _AddNewTaskButtonState extends State<AddNewTaskButton> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -16,13 +32,19 @@ class AddNewTaskButton extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Center(
         child: InkWell(
-          onTap: () {
-             Navigator.of(context).push(
+          onTap: () async{
+
+            final refresh = await Navigator.push(context,
               MaterialPageRoute(
-                builder: (context) => AddTask(catID:catID,catName:catName,),
+                builder: (context) => AddTask(catName: widget.catName,catID: widget.catID,),
               ),
             );
-
+            if (refresh == true) {
+              setState(() {
+                Navigator.pop(context);
+                Navigator.push(context,MaterialPageRoute(builder: (context)=>task_screen(catID: widget.catID!, color: widget.color, catName: widget.catName)));
+              });
+            }
           },
           child: Container(
             height: screenHeight * 0.09,
@@ -57,7 +79,7 @@ class AddNewTaskButton extends StatelessWidget {
                       crossAxisAlignment:
                       CrossAxisAlignment.center,
                       children: [
-                    
+
                         CircleAvatar(
                           backgroundColor: Colors.grey,
 
@@ -95,15 +117,15 @@ class AddNewTaskButton extends StatelessWidget {
                                   fit: BoxFit.scaleDown,
                                   child: Text(
                                     "Date",
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                      ),
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                             Row(children: [Text("Task category"
-                            ,style: TextStyle(
+                              ,style: TextStyle(
                                 color: Colors.grey,
                               ),),
                             ]),
@@ -127,6 +149,6 @@ class AddNewTaskButton extends StatelessWidget {
           ),
         ),
       ),
-    );;
+    );
   }
 }
