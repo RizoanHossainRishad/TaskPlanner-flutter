@@ -265,7 +265,7 @@ class _ListScreenState extends State<ListScreen> {
                                     .push(
                                       MaterialPageRoute(
                                         builder: (_) =>
-                                            task_screen(catID: contacts.id!,color: contacts.colorValue,),
+                                            task_screen(catID: contacts.id!,color: contacts.colorValue,catName:contacts.namedid),
                                       ),
                                     );
                                 if (refresh == true) {

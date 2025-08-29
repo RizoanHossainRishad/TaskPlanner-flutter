@@ -6,7 +6,8 @@ import 'add_task.dart';
 
 class AddNewTaskButton extends StatelessWidget {
   int? catID;
-  AddNewTaskButton({super.key,required this.catID});
+  String? catName;
+  AddNewTaskButton({super.key,required this.catID,required this.catName});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class AddNewTaskButton extends StatelessWidget {
           onTap: () {
              Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => AddTask(catID:catID),
+                builder: (context) => AddTask(catID:catID,catName:catName,),
               ),
             );
 

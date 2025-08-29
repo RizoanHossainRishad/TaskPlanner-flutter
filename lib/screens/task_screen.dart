@@ -9,7 +9,8 @@ import 'add_task.dart';
 class task_screen extends StatefulWidget {
   int catID;
   int? color;
-  task_screen({super.key, required this.catID, required this.color});
+  String? catName;
+  task_screen({super.key, required this.catID, required this.color,required this.catName});
   @override
   State<task_screen> createState() => _task_screenState();
 }
@@ -47,7 +48,7 @@ class _task_screenState extends State<task_screen> {
               ? CustomScrollView(
                   slivers: [
                     _buildSliverAppBar(screenWidth),
-                    AddNewTaskButton(catID: widget.catID),
+                    AddNewTaskButton(catID: widget.catID,catName:widget.catName),
                     SliverToBoxAdapter(
                       child: Container(
                         height: screenHeight * 0.09,
@@ -85,7 +86,7 @@ class _task_screenState extends State<task_screen> {
               : CustomScrollView(
                   slivers: [
                     _buildSliverAppBar(screenHeight),
-                    AddNewTaskButton(catID: widget.catID),
+                    AddNewTaskButton(catID: widget.catID,catName:widget.catName),
                     SliverList(
                       delegate: SliverChildBuilderDelegate((context, index) {
                         final task = snapshot.data?[index];
@@ -171,7 +172,8 @@ class _task_screenState extends State<task_screen> {
                                             date: task.date,
                                             time: task.time,
                                           ),
-                                          catID: task.id,
+                                          catName: widget.catName,
+                                          catID: widget.catID,
                                         ),
                                       ),
                                     );
@@ -238,17 +240,36 @@ class _task_screenState extends State<task_screen> {
                     ),
                   ),
                 ),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    "Tasks",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.of(context).size.width * 0.1,
-                      shadows: shadowStyleBold(),
+                Column(
+                  children: [
+                    Expanded(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          "Tasks",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.width * 0.1,
+                            shadows: shadowStyleBold(),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    Expanded(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                         "${widget.catName}",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: MediaQuery.of(context).size.width * 0.7,
+                            shadows: shadowStyleBold(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 // Add button
                 Container(
@@ -260,7 +281,7 @@ class _task_screenState extends State<task_screen> {
                     onPressed: () async {
                       final refresh = await Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => AddTask(catID: widget.catID),
+                          builder: (context) => AddTask(catName: widget.catName,catID: widget.catID,),
                         ),
                       );
                       if (refresh == true) {

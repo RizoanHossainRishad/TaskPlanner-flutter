@@ -4,8 +4,10 @@ import '../model_classes/taskmodel.dart';
 
 class AddTask extends StatefulWidget {
   Task? task;
+  String? catName;
   int? catID;
-  AddTask({super.key, this.task, this.catID});
+
+  AddTask({super.key,this.task, required this.catName, required this.catID});
 
   @override
   State<AddTask> createState() => _AddTaskState();
@@ -69,7 +71,6 @@ class _AddTaskState extends State<AddTask> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-
       body: CustomScrollView(
         slivers: [
           _buildSliverAppBar(screenHeight),
@@ -86,7 +87,10 @@ class _AddTaskState extends State<AddTask> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: _buildTextEdit(_descController, "Add a Description"),
+                      child: _buildTextEdit(
+                        _descController,
+                        "Add a Description",
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -102,7 +106,10 @@ class _AddTaskState extends State<AddTask> {
                           child: DropdownButton(
                             hint: Text(
                               "Select a Category!!",
-                              style: TextStyle(fontSize: 15, color: Colors.grey),
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.grey,
+                              ),
                             ),
                             underline: SizedBox(),
                             elevation: 0,
@@ -147,22 +154,25 @@ class _AddTaskState extends State<AddTask> {
                                       : "${_selectedDate!.year}-${_selectedDate!.month}-${_selectedDate!.day}",
                                   style: _selectedDate == null
                                       ? TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.grey, // style for null date
-                                  )
+                                          fontSize: 15,
+                                          color: Colors
+                                              .grey, // style for null date
+                                        )
                                       : TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20,
-                                    color:
-                                    Colors.black, // style for selected date
-                                  ),
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 20,
+                                          color: Colors
+                                              .black, // style for selected date
+                                        ),
                                 ),
                               ),
                               ElevatedButton(
                                 onPressed: () =>
                                     _pickDate(context), // Pass context here
                                 child: Text(
-                                  _selectedDate == null ? "Pick Date" : "Change Date",
+                                  _selectedDate == null
+                                      ? "Pick Date"
+                                      : "Change Date",
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -191,11 +201,14 @@ class _AddTaskState extends State<AddTask> {
                                       : _selectedTime!.format(context),
                                   style: _selectedTime != null
                                       ? TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: Colors.black,
-                                  )
-                                      : TextStyle(fontSize: 15, color: Colors.grey),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                          color: Colors.black,
+                                        )
+                                      : TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.grey,
+                                        ),
                                 ),
                               ),
                               ElevatedButton(
@@ -216,21 +229,23 @@ class _AddTaskState extends State<AddTask> {
                     SizedBox(height: 30),
                     ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(Colors.blueGrey),
+                        backgroundColor: WidgetStatePropertyAll(
+                          Colors.blueGrey,
+                        ),
                       ),
                       onPressed: () async {
                         if (widget.task != null) {
                           await DBTaskHelper.updateTask(
                             Task(
                               id: widget.task!.id,
-                              listId: widget.catID!,
+                              listId: widget.task!.listId,
                               description: _descController.text,
-                              name: widget.task!.name,
+                              name: _nameController.text,
                               category: _selectedCategory!,
                               date: _selectedDate!,
                               time: _selectedTime!,
-                              isDone: widget.task!.isDone,
                             ),
+
                           );
                           setState(() {});
                           Navigator.of(context).pop(true);
@@ -249,15 +264,16 @@ class _AddTaskState extends State<AddTask> {
                           Navigator.of(context).pop(true);
                         }
                       },
-                      child: Text("Add Task",style: TextStyle(
-                        color: Colors.white
-                      ),),
+                      child: Text(
+                        "Add Task",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -296,72 +312,100 @@ class _AddTaskState extends State<AddTask> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  padding: EdgeInsets.all(2),
-                  child: IconButton(
-                    style: ButtonStyle(),
-                    onPressed: () {
-                      Navigator.of(context).pop(true);
-                      setState(() {});
-                    },
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                      size: 28,
-                      shadows: shadowStyleBold(),
-                    ),
-                  ),
-                ),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    'Add Tasks on List ${widget.catID}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.of(context).size.width * 0.05,
-                      shadows: shadowStyleBold(),
-                    ),
-                  ),
-                ),
-                // Add button
-
-                if (widget.task != null && widget.task!.name.isNotEmpty)
-                  Container(
-                    decoration: BoxDecoration(),
-                    padding: EdgeInsets.all(8),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.all(2),
                     child: IconButton(
-                      onPressed: () async {
-                        await DBTaskHelper.deleteTask(widget.task!.id);
-                        setState(() {});
+                      style: ButtonStyle(),
+                      onPressed: () {
                         Navigator.of(context).pop(true);
+                        setState(() {});
                       },
-                      icon: Icon(Icons.delete,color: Colors.red,),
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                        size: 28,
+                        shadows: shadowStyleBold(),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          'Add Tasks',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.width * 0.06,
+                            shadows: shadowStyleBold(),
+                          ),
+                        ),
+                      ),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          "List: ${widget.catName}",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.width * 0.03,
+                            shadows: shadowStyleBold(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Add button
+                if (widget.task != null && widget.task!.name.isNotEmpty)
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(),
+                      padding: EdgeInsets.all(8),
+                      child: IconButton(
+                        onPressed: () async {
+                          await DBTaskHelper.deleteTask(widget.task!.id);
+                          setState(() {});
+                          Navigator.of(context).pop(true);
+                        },
+                        icon: Icon(Icons.delete, color: Colors.red),
+                      ),
                     ),
                   )
                 else
-                  Container(
-                    decoration: BoxDecoration(),
-                    padding: EdgeInsets.all(8),
-                    child: IconButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: Text("Task is yet to be added!!"),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.of(context).pop(),
-                                child: Text("OK"),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                      icon: Icon(Icons.info_outline,color: Colors.white,shadows: shadowStyleBold(),),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(),
+                      padding: EdgeInsets.all(8),
+                      child: IconButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text("Task is yet to be added!!"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: Text("OK"),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.info_outline,
+                          color: Colors.white,
+                          shadows: shadowStyleBold(),
+                        ),
+                      ),
                     ),
                   ),
-
               ],
             ),
           ),
