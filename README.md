@@ -13,13 +13,13 @@ You can also customize tasks and lists with:
 
 ## ✨ Features
 
-- 📂 **Categories/Lists** – Create and manage categories (e.g., Work, Personal, Study).
-- ✅ **Tasks** – Add tasks under specific categories.
-- 📝 **CRUD Support** – Create, Read, Update, and Delete both categories and tasks.
-- 💾 **Local Storage** – All data is stored locally using **Sqflite** (no internet required).
-- 🎨 **Customizable UI** – Assign colors to lists for better organization.
-- ⏰ **Deadline Support** – Add due dates and times to tasks.
-- ✔️ **Task Completion** – Mark tasks as done using checkboxes.
+-  **Categories/Lists** – Create and manage categories (e.g., Work, Personal, Study).
+-  **Tasks** – Add tasks under specific categories.
+-  **CRUD Support** – Create, Read, Update, and Delete both categories and tasks.
+-  **Local Storage** – All data is stored locally using **Sqflite** (no internet required).
+-  **Customizable UI** – Assign colors to lists for better organization.
+-  **Deadline Support** – Add due dates and times to tasks.
+-  **Task Completion** – Mark tasks as done using checkboxes.
 
 ---
 
@@ -36,11 +36,12 @@ You can also customize tasks and lists with:
 *List Screen*
 <p float="left">
   <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/1st Screen.jpg" width="200" />
-  <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/Add_list.jpg" width="200" />
+  <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/Add_list_screen.jpg" width="200" />
   <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/add_list_colorpicker.jpg" width="200" />
   <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/List_added.jpg" width="200" />
   <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/list_deletion_alert.jpg" width="200" />
 </p>
+
 *Task Screen*
 <p float="left">
   <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/onclick_list_taskScreen.jpg" width="200" />
@@ -55,8 +56,21 @@ You can also customize tasks and lists with:
 </p>
 ---
 
-## 🚀 Getting Started
+##  Installation
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/taskplanner-app.git
+git clone https://github.com/RizoanHossainRishad/TaskPlanner-flutter.git
+```
+### 2.**Navigate to the project folder**
+   ```bash
+   cd TaskPlanner-flutter
+   ```
+### 3.**Get Flutter dependencies**
+   ```bash
+   flutter pub get
+   ```
+### 4.**Run the app**
+   ```bash
+   flutter run
+  ```
