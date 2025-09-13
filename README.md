@@ -74,3 +74,4 @@ git clone https://github.com/RizoanHossainRishad/TaskPlanner-flutter.git
    ```bash
    flutter run
   ```
+For any queries and bug detects please mail : Rizoanrishad@gmail.com 
