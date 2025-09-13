@@ -33,8 +33,26 @@ You can also customize tasks and lists with:
 
 ## 📸 Screenshots
 
-*(Add screenshots here if you have them)*
-
+*List Screen*
+<p float="left">
+  <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/1st Screen.jpg" width="200" />
+  <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/Add_list.jpg" width="200" />
+  <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/add_list_colorpicker.jpg" width="200" />
+  <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/List_added.jpg" width="200" />
+  <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/list_deletion_alert.jpg" width="200" />
+</p>
+*Task Screen*
+<p float="left">
+  <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/onclick_list_taskScreen.jpg" width="200" />
+  <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/adding_newTask.jpg" width="200" />
+  <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/predefined_categories_task.jpg" width="200" />
+  <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/data_picker_task.jpg" width="200" />
+  <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/time_picker_task.jpg" width="200" />
+  <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/top_info_button.jpg" width="200" />
+  <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/added_task.jpg" width="200" />
+  <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/onComplete_task.jpg" width="200" />
+  <img src="https://github.com/RizoanHossainRishad/TaskPlanner-flutter/blob/main/project_showcase/update_screen.jpg" width="200" />
+</p>
 ---
 
 ## 🚀 Getting Started
