@@ -1,16 +1,44 @@
-# taskplanner_demos
+# 📅 TaskPlanner App
+**Created by Rizoan Hossain**
 
-A new Flutter project.
+A simple and efficient **Task Planner** application built with **Flutter** and **Sqflite (SQLite local database)**.  
+This app allows you to **create lists** and **add tasks under each list**, helping you stay organized and productive.
 
-## Getting Started
+You can also customize tasks and lists with:
+- 🎨 Different colors for different lists
+- 📅 Date and time assignment for tasks
+- ✅ Mark tasks as completed with a checkbox
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## ✨ Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- 📂 **Categories/Lists** – Create and manage categories (e.g., Work, Personal, Study).
+- ✅ **Tasks** – Add tasks under specific categories.
+- 📝 **CRUD Support** – Create, Read, Update, and Delete both categories and tasks.
+- 💾 **Local Storage** – All data is stored locally using **Sqflite** (no internet required).
+- 🎨 **Customizable UI** – Assign colors to lists for better organization.
+- ⏰ **Deadline Support** – Add due dates and times to tasks.
+- ✔️ **Task Completion** – Mark tasks as done using checkboxes.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 🛠️ Tech Stack
+
+- **Flutter** – Cross-platform app development
+- **Sqflite** – Local database storage
+
+
+---
+
+## 📸 Screenshots
+
+*(Add screenshots here if you have them)*
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/your-username/taskplanner-app.git

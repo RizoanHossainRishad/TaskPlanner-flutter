@@ -216,7 +216,9 @@ class _AddListState extends State<AddList> {
 TextField _buildTextField(TextEditingController s, String hint) {
   return TextField(
     controller: s,
+    maxLength: 30,
     decoration: InputDecoration(
+
       hintText: hint,
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
     ),

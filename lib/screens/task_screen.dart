@@ -240,10 +240,10 @@ class _task_screenState extends State<task_screen> {
                     ),
                   ),
                 ),
-                Column(
-                  children: [
-                    Expanded(
-                      child: FittedBox(
+                Expanded(
+                  child: Column(
+                    children: [
+                      FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(
                           "Tasks",
@@ -255,21 +255,21 @@ class _task_screenState extends State<task_screen> {
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                         "${widget.catName}",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: MediaQuery.of(context).size.width * 0.7,
-                            shadows: shadowStyleBold(),
+                      Flexible(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                           "${widget.catName}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: MediaQuery.of(context).size.width * 0.7,
+                              shadows: shadowStyleBold(),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 // Add button
                 Container(
